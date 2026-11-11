@@ -1,6 +1,12 @@
 variable "image_tag" {
   type    = string
-  default = "v1"
+  default = "v3" # НОВЕ: було v2
+}
+
+# НОВЕ: час життя кешу в секундах, 0 = кеш вимкнено
+variable "cache_ttl" {
+  type    = string
+  default = "0"
 }
 
 resource "azurerm_log_analytics_workspace" "main" {
@@ -74,6 +80,12 @@ resource "azurerm_container_app" "api" {
       env {
         name        = "DATABASE_URL"
         secret_name = "database-url"
+      }
+
+      # НОВЕ: перемикач кешу
+      env {
+        name  = "CACHE_TTL_SECONDS"
+        value = var.cache_ttl
       }
     }
 

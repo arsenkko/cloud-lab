@@ -11,3 +11,6 @@ variable "prefix" {
   type    = string
   default = "cloudlab"
 }
+variable "alert_email" {
+  type = string
+}

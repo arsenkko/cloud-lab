@@ -19,6 +19,10 @@ resource "azurerm_postgresql_flexible_server" "db" {
   storage_mb                    = 32768
   backup_retention_days         = 7
   public_network_access_enabled = true
+
+  lifecycle {
+    ignore_changes = [zone, high_availability[0].standby_availability_zone]
+  }
 }
 
 resource "azurerm_postgresql_flexible_server_database" "app" {
